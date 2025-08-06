@@ -1,0 +1,507 @@
+<specification_first_tool_usage>
+  <overview>
+    Specific guidance for using Roo Code tools effectively in specification-first
+    development workflows, emphasizing context engineering and systematic validation.
+  </overview>
+
+  <tool_priorities>
+    <priority level="1">
+      <tool>read_file</tool>
+      <purpose>Always read existing specifications before making changes</purpose>
+      <context_engineering_use>Gather complete context from specification files</context_engineering_use>
+      <best_practice>Read multiple related specification files in a single request</best_practice>
+    </priority>
+    
+    <priority level="2">
+      <tool>search_files</tool>
+      <purpose>Find existing patterns and related implementations</purpose>
+      <context_engineering_use>Discover existing context and patterns across the codebase</context_engineering_use>
+      <best_practice>Use semantic search to find specification patterns and examples</best_practice>
+    </priority>
+    
+    <priority level="3">
+      <tool>list_files</tool>
+      <purpose>Understand project structure and specification organization</purpose>
+      <context_engineering_use>Map the context architecture and specification hierarchy</context_engineering_use>
+      <best_practice>Use recursive listing to understand complete specification structure</best_practice>
+    </priority>
+  </tool_priorities>
+
+  <specification_creation_tools>
+    <tool name="write_to_file">
+      <use_case>Creating new specification files</use_case>
+      <specification_first_approach>
+        <step>Always create specifications before any implementation code</step>
+        <step>Use established templates from common patterns</step>
+        <step>Include complete context (system, business, technical)</step>
+        <step>Reference related specifications for consistency</step>
+      </specification_first_approach>
+      
+      <best_practices>
+        <practice>Create all five specification types for each feature</practice>
+        <practice>Use consistent file naming and directory structure</practice>
+        <practice>Include specification metadata (version, author, date)</practice>
+        <practice>Document assumptions and design decisions</practice>
+      </best_practices>
+      
+      <example_workflow>
+        <![CDATA[
+# Creating Feature Specifications
+
+1. Create feature directory structure:
+   /specs/features/[feature-name]/
+
+2. Create each specification file:
+   - api-contract.md (API endpoints and contracts)
+   - data-model.md (Data structures and relationships)
+   - ui-design.md (User interface components)
+   - business-logic.md (Business rules and algorithms)
+
+3. Ensure each file includes:
+   - Complete context references
+   - Integration points with other features
+   - Validation and error handling requirements
+   - Performance and quality requirements
+        ]]>
+      </example_workflow>
+    </tool>
+
+    <tool name="apply_diff">
+      <use_case>Updating existing specifications</use_case>
+      <specification_first_approach>
+        <step>Always update specifications before updating implementation</step>
+        <step>Maintain specification version history</step>
+        <step>Document rationale for changes</step>
+        <step>Ensure consistency across related specifications</step>
+      </specification_first_approach>
+      
+      <best_practices>
+        <practice>Read the complete specification file before making changes</practice>
+        <practice>Update related specifications to maintain consistency</practice>
+        <practice>Include change rationale in commit messages</practice>
+        <practice>Validate changes don't break existing integrations</practice>
+      </best_practices>
+      
+      <example_usage>
+        <![CDATA[
+<apply_diff>
+<path>specs/features/user-auth/api-contract.md</path>
+<diff>
+<<<<<<< SEARCH
+:start_line:45
+-------
+## Authentication
+- **Method**: JWT Bearer tokens
+- **Expiration**: 24 hours
+=======
+## Authentication
+- **Method**: JWT Bearer tokens with refresh token rotation
+- **Access Token Expiration**: 15 minutes
+- **Refresh Token Expiration**: 7 days
+- **Rotation**: Refresh tokens are rotated on each use
+>>>>>>> REPLACE
+</diff>
+</apply_diff>
+        ]]>
+      </example_usage>
+    </tool>
+  </specification_creation_tools>
+
+  <context_engineering_tools>
+    <tool name="read_file">
+      <context_engineering_purpose>Gather comprehensive context from specifications</context_engineering_purpose>
+      
+      <efficient_reading_strategy>
+        <strategy name="specification_context_gathering">
+          <description>Read all relevant specifications in a single operation</description>
+          <implementation>
+            <step>Identify all specification files relevant to the task</step>
+            <step>Read up to 5 specification files simultaneously</step>
+            <step>Use line ranges for large files to focus on relevant sections</step>
+            <step>Prioritize system overview and shared specifications first</step>
+          </implementation>
+          
+          <example>
+            <![CDATA[
+<read_file>
+<args>
+  <file>
+    <path>specs/system-overview.md</path>
+  </file>
+  <file>
+    <path>specs/shared/api-contract.md</path>
+  </file>
+  <file>
+    <path>specs/features/user-auth/api-contract.md</path>
+  </file>
+  <file>
+    <path>specs/features/user-auth/data-model.md</path>
+  </file>
+  <file>
+    <path>specs/features/user-auth/business-logic.md</path>
+  </file>
+</args>
+</read_file>
+            ]]>
+          </example>
+        </strategy>
+        
+        <strategy name="targeted_context_reading">
+          <description>Read specific sections of specifications for focused tasks</description>
+          <implementation>
+            <step>Use line ranges to read only relevant sections</step>
+            <step>Focus on integration points and dependencies</step>
+            <step>Read error handling and validation sections</step>
+            <step>Include performance and quality requirements</step>
+          </implementation>
+        </strategy>
+      </efficient_reading_strategy>
+      
+      <context_validation>
+        <validation_checklist>
+          <item>System context is understood from system-overview.md</item>
+          <item>Shared patterns are identified from shared/ specifications</item>
+          <item>Feature-specific requirements are clear</item>
+          <item>Integration points and dependencies are mapped</item>
+          <item>Quality and performance requirements are noted</item>
+        </validation_checklist>
+      </context_validation>
+    </tool>
+
+    <tool name="search_files">
+      <context_engineering_purpose>Discover existing patterns and context across specifications</context_engineering_purpose>
+      
+      <search_strategies>
+        <strategy name="pattern_discovery">
+          <description>Find existing specification patterns to maintain consistency</description>
+          <search_patterns>
+            <pattern>API endpoint patterns: "Method.*POST|GET|PUT|DELETE"</pattern>
+            <pattern>Data model patterns: "type.*string|number|boolean"</pattern>
+            <pattern>Error handling patterns: "error.*handling|validation"</pattern>
+            <pattern>Integration patterns: "integration.*external|third-party"</pattern>
+          </search_patterns>
+          
+          <example>
+            <![CDATA[
+<search_files>
+<path>specs</path>
+<regex>authentication.*JWT|Bearer|token</regex>
+<file_pattern>*.md</file_pattern>
+</search_files>
+            ]]>
+          </example>
+        </strategy>
+        
+        <strategy name="consistency_validation">
+          <description>Ensure consistent terminology and patterns across specifications</description>
+          <validation_searches>
+            <search>Find all API endpoint definitions for consistency</search>
+            <search>Locate error handling patterns across features</search>
+            <search>Identify data model relationships and dependencies</search>
+            <search>Discover shared business logic and validation rules</search>
+          </validation_searches>
+        </strategy>
+      </search_strategies>
+    </tool>
+
+    <tool name="list_files">
+      <context_engineering_purpose>Map specification architecture and organization</context_engineering_purpose>
+      
+      <usage_patterns>
+        <pattern name="specification_structure_mapping">
+          <description>Understand the complete specification architecture</description>
+          <implementation>
+            <![CDATA[
+<list_files>
+<path>specs</path>
+<recursive>true</recursive>
+</list_files>
+            ]]>
+          </implementation>
+          <analysis_focus>
+            <focus>Identify missing specification files</focus>
+            <focus>Validate proper directory structure</focus>
+            <focus>Check for specification completeness</focus>
+            <focus>Map feature boundaries and relationships</focus>
+          </analysis_focus>
+        </pattern>
+        
+        <pattern name="implementation_structure_validation">
+          <description>Ensure implementation structure matches specification organization</description>
+          <implementation>
+            <![CDATA[
+<list_files>
+<path>src</path>
+<recursive>true</recursive>
+</list_files>
+            ]]>
+          </implementation>
+          <validation_checks>
+            <check>Implementation directories match specification features</check>
+            <check>Shared components align with shared specifications</check>
+            <check>Feature boundaries are respected in code organization</check>
+          </validation_checks>
+        </pattern>
+      </usage_patterns>
+    </tool>
+  </context_engineering_tools>
+
+  <implementation_generation_tools>
+    <tool name="ask_followup_question">
+      <specification_first_usage>Use only when specifications are incomplete or ambiguous</specification_first_usage>
+      
+      <when_to_use>
+        <scenario>Specifications lack essential context for implementation</scenario>
+        <scenario>Multiple valid interpretations of requirements exist</scenario>
+        <scenario>Integration points are unclear or undefined</scenario>
+        <scenario>Quality requirements are missing or ambiguous</scenario>
+      </when_to_use>
+      
+      <specification_focused_questions>
+        <question_pattern>
+          <![CDATA[
+<ask_followup_question>
+<question>The [specification type] for [feature] is missing [specific requirement]. Which approach should be used?</question>
+<follow_up>
+<suggest>Follow the pattern established in [related feature/specification]</suggest>
+<suggest>Create a new pattern based on [specific requirements]</suggest>
+<suggest>Use the shared pattern from [shared specification]</suggest>
+<suggest>Defer to system-wide standards in system-overview.md</suggest>
+</follow_up>
+</ask_followup_question>
+          ]]>
+        </question_pattern>
+      </specification_focused_questions>
+      
+      <avoid_patterns>
+        <anti_pattern>Don't ask for implementation details that should be in specifications</anti_pattern>
+        <anti_pattern>Don't ask for business logic that should be documented</anti_pattern>
+        <anti_pattern>Don't ask for design decisions that should be specified</anti_pattern>
+      </avoid_patterns>
+    </tool>
+
+    <tool name="new_task">
+      <specification_first_usage>Create focused tasks for specification-driven implementation</specification_first_usage>
+      
+      <task_creation_patterns>
+        <pattern name="specification_driven_implementation">
+          <description>Create implementation tasks based on complete specifications</description>
+          <task_template>
+            <![CDATA[
+<new_task>
+<mode>code</mode>
+<message>
+Based on the specifications:
+- System context: /specs/system-overview.md
+- Feature specs: /specs/features/[feature-name]/
+- Shared patterns: /specs/shared/[relevant-specs]
+
+Generate the complete [component/feature] implementation that follows
+all requirements defined in the referenced specifications.
+
+Quality requirements:
+- Follow all patterns from shared specifications
+- Implement all business logic as specified
+- Include comprehensive error handling
+- Meet performance requirements specified
+- Ensure integration points work as defined
+</message>
+</new_task>
+            ]]>
+          </task_template>
+        </pattern>
+        
+        <pattern name="specification_validation_task">
+          <description>Create tasks to validate implementations against specifications</description>
+          <task_template>
+            <![CDATA[
+<new_task>
+<mode>debug</mode>
+<message>
+Validate the implementation in [directory/file] against the specifications:
+- [Specification 1]: [Path and requirements]
+- [Specification 2]: [Path and requirements]
+
+Check for:
+- Specification compliance
+- Missing functionality
+- Incorrect implementations
+- Integration point issues
+- Quality requirement adherence
+</message>
+</new_task>
+            ]]>
+          </task_template>
+        </pattern>
+      </task_creation_patterns>
+    </tool>
+  </implementation_generation_tools>
+
+  <validation_and_quality_tools>
+    <tool name="execute_command">
+      <specification_first_usage>Run validation and testing commands to verify specification compliance</specification_first_usage>
+      
+      <validation_commands>
+        <command name="specification_validation">
+          <purpose>Validate that specifications are complete and consistent</purpose>
+          <examples>
+            <example>
+              <![CDATA[
+<execute_command>
+<command>find specs -name "*.md" -exec grep -L "## Business Logic\|## API Contract\|## Data Model\|## UI Design" {} \;</command>
+</execute_command>
+              ]]>
+            </example>
+            <description>Find specification files missing required sections</description>
+          </examples>
+        </command>
+        
+        <command name="implementation_testing">
+          <purpose>Run tests to validate implementation against specifications</purpose>
+          <examples>
+            <example>
+              <![CDATA[
+<execute_command>
+<command>npm test -- --coverage --verbose</command>
+</execute_command>
+              ]]>
+            </example>
+            <description>Run comprehensive tests with coverage reporting</description>
+          </examples>
+        </command>
+        
+        <command name="api_contract_validation">
+          <purpose>Validate API implementations against contract specifications</purpose>
+          <examples>
+            <example>
+              <![CDATA[
+<execute_command>
+<command>npx swagger-codegen validate -i specs/api/openapi.yaml</command>
+</execute_command>
+              ]]>
+            </example>
+            <description>Validate OpenAPI specifications for correctness</description>
+          </examples>
+        </command>
+      </validation_commands>
+    </tool>
+
+    <tool name="browser_action">
+      <specification_first_usage>Validate UI implementations against UI design specifications</specification_first_usage>
+      
+      <ui_validation_workflow>
+        <step number="1">
+          <action>Launch application in browser</action>
+          <purpose>Access the implemented UI for validation</purpose>
+        </step>
+        
+        <step number="2">
+          <action>Navigate to feature pages</action>
+          <purpose>Test each UI component specified in UI design specifications</purpose>
+        </step>
+        
+        <step number="3">
+          <action>Validate visual design</action>
+          <validation_points>
+            <point>Colors match design system specifications</point>
+            <point>Typography follows specified font scales</point>
+            <point>Spacing uses design system values</point>
+            <point>Components match specified layouts</point>
+          </validation_points>
+        </step>
+        
+        <step number="4">
+          <action>Test interactive behavior</action>
+          <validation_points>
+            <point>User interactions work as specified</point>
+            <point>State management follows specification</point>
+            <point>Error handling displays correctly</point>
+            <point>Loading states appear as designed</point>
+          </validation_points>
+        </step>
+        
+        <step number="5">
+          <action>Validate accessibility</action>
+          <validation_points>
+            <point>Keyboard navigation works as specified</point>
+            <point>Screen reader compatibility is maintained</point>
+            <point>Focus management follows specifications</point>
+            <point>Color contrast meets specified requirements</point>
+          </validation_points>
+        </step>
+      </ui_validation_workflow>
+    </tool>
+  </validation_and_quality_tools>
+
+  <workflow_integration>
+    <phase name="specification_creation">
+      <primary_tools>
+        <tool>list_files</tool>
+        <tool>read_file</tool>
+        <tool>search_files</tool>
+        <tool>write_to_file</tool>
+      </primary_tools>
+      
+      <tool_sequence>
+        <step>Use list_files to understand existing project structure</step>
+        <step>Use search_files to find existing specification patterns</step>
+        <step>Use read_file to gather context from related specifications</step>
+        <step>Use write_to_file to create new specifications following templates</step>
+      </tool_sequence>
+    </phase>
+    
+    <phase name="context_engineering">
+      <primary_tools>
+        <tool>read_file</tool>
+        <tool>search_files</tool>
+        <tool>new_task</tool>
+      </primary_tools>
+      
+      <tool_sequence>
+        <step>Use read_file to gather comprehensive specification context</step>
+        <step>Use search_files to discover related patterns and dependencies</step>
+        <step>Use new_task to create specification-driven implementation tasks</step>
+      </tool_sequence>
+    </phase>
+    
+    <phase name="implementation_validation">
+      <primary_tools>
+        <tool>read_file</tool>
+        <tool>execute_command</tool>
+        <tool>browser_action</tool>
+      </primary_tools>
+      
+      <tool_sequence>
+        <step>Use read_file to review specifications for validation criteria</step>
+        <step>Use execute_command to run automated tests and validation</step>
+        <step>Use browser_action to validate UI implementations</step>
+      </tool_sequence>
+    </phase>
+  </workflow_integration>
+
+  <common_tool_mistakes>
+    <mistake name="implementation_before_specification">
+      <description>Creating implementation code before specifications are complete</description>
+      <correct_approach>Always read and validate specifications before any implementation</correct_approach>
+      <tool_pattern>read_file → validate completeness → write_to_file (specs) → new_task (implementation)</tool_pattern>
+    </mistake>
+    
+    <mistake name="insufficient_context_gathering">
+      <description>Not reading enough specification context before implementation</description>
+      <correct_approach>Read all related specifications in a single read_file operation</correct_approach>
+      <tool_pattern>read_file (multiple specs) → search_files (patterns) → new_task (with full context)</tool_pattern>
+    </mistake>
+    
+    <mistake name="skipping_validation">
+      <description>Not validating implementations against specifications</description>
+      <correct_approach>Use systematic validation after every implementation</correct_approach>
+      <tool_pattern>implementation → execute_command (tests) → browser_action (UI validation) → specification compliance check</tool_pattern>
+    </mistake>
+    
+    <mistake name="inconsistent_patterns">
+      <description>Not checking for existing patterns before creating new ones</description>
+      <correct_approach>Always search for existing patterns and maintain consistency</correct_approach>
+      <tool_pattern>search_files (existing patterns) → read_file (pattern examples) → apply consistent approach</tool_pattern>
+    </mistake>
+  </common_tool_mistakes>
+</specification_first_tool_usage>

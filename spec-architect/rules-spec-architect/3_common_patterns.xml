@@ -1,0 +1,950 @@
+<specification_patterns_and_templates>
+  <overview>
+    Reusable specification templates and common patterns for the five core
+    specification types in specification-first development.
+  </overview>
+
+  <system_overview_template>
+    <description>Template for system-wide understanding and architecture</description>
+    <location>/specs/system-overview.md</location>
+    <template>
+      <![CDATA[
+# System Overview: [Project Name]
+
+## Vision Statement
+[One paragraph describing the system's purpose and value proposition]
+
+## Core Architecture
+### System Components
+- **[Component 1]**: [Responsibility and role]
+- **[Component 2]**: [Responsibility and role]
+- **[Component 3]**: [Responsibility and role]
+
+### System Diagram
+```mermaid
+graph TD
+    A[Frontend] --> B[API Gateway]
+    B --> C[Service 1]
+    B --> D[Service 2]
+    C --> E[(Database)]
+    D --> E
+```
+
+### Technology Stack
+- **Frontend**: [Technologies and rationale]
+- **Backend**: [Technologies and rationale]
+- **Database**: [Database choice and rationale]
+- **Infrastructure**: [Deployment and hosting approach]
+
+## Business Context
+### Target Users
+- **[User Type 1]**: [Needs and goals]
+- **[User Type 2]**: [Needs and goals]
+
+### Key Business Rules
+- **[Rule 1]**: [Description and enforcement]
+- **[Rule 2]**: [Description and enforcement]
+
+## Quality Requirements
+- **Performance**: [System-wide performance criteria]
+- **Security**: [Security principles and requirements]
+- **Scalability**: [Growth expectations and scaling strategy]
+- **Reliability**: [Uptime and error handling requirements]
+
+## Feature Boundaries
+- **[Feature 1]**: [Scope and responsibilities]
+- **[Feature 2]**: [Scope and responsibilities]
+
+## Integration Points
+- **[External System 1]**: [Integration purpose and method]
+- **[External System 2]**: [Integration purpose and method]
+
+## Deployment Architecture
+- **Environment Strategy**: [Development, staging, production setup]
+- **Scaling Strategy**: [How the system scales with load]
+- **Monitoring Strategy**: [Observability and alerting approach]
+      ]]>
+    </template>
+  </system_overview_template>
+
+  <api_contract_templates>
+    <shared_api_contract_template>
+      <description>Template for global API standards and patterns</description>
+      <location>/specs/shared/api-contract.md</location>
+      <template>
+        <![CDATA[
+# API Contract: Global Standards
+
+## API Standards
+- **Base URL**: [API base URL]
+- **Authentication**: [Authentication method and implementation]
+- **Content-Type**: [Request/response format]
+- **Rate Limiting**: [Rate limiting rules and enforcement]
+- **Versioning**: [API versioning strategy]
+
+## Standard Response Format
+```json
+{
+  "data": {},
+  "meta": {
+    "timestamp": "2024-01-15T10:30:00Z",
+    "requestId": "req_123456789",
+    "version": "v1.0"
+  },
+  "pagination": {
+    "page": 1,
+    "limit": 20,
+    "total": 150,
+    "hasNext": true
+  }
+}
+```
+
+## Error Response Format
+```json
+{
+  "error": {
+    "code": "ERROR_CODE",
+    "message": "Human readable message",
+    "details": [],
+    "field": "fieldName"
+  },
+  "meta": {
+    "timestamp": "2024-01-15T10:30:00Z",
+    "requestId": "req_123456789"
+  }
+}
+```
+
+## Authentication Patterns
+### JWT Token Structure
+```json
+{
+  "sub": "user_id",
+  "iat": 1516239022,
+  "exp": 1516242622,
+  "roles": ["user", "admin"],
+  "permissions": ["read", "write"]
+}
+```
+
+## Common HTTP Status Codes
+- **200**: Success
+- **201**: Created
+- **400**: Bad Request
+- **401**: Unauthorized
+- **403**: Forbidden
+- **404**: Not Found
+- **422**: Validation Error
+- **500**: Internal Server Error
+
+## Security Requirements
+- All endpoints require authentication unless explicitly marked public
+- Input validation on all request parameters
+- Rate limiting per user and per endpoint
+- CORS configuration for frontend domains
+        ]]>
+      </template>
+    </shared_api_contract_template>
+
+    <feature_api_contract_template>
+      <description>Template for feature-specific API endpoints</description>
+      <location>/specs/features/[feature-name]/api-contract.md</location>
+      <template>
+        <![CDATA[
+# API Contract: [Feature Name]
+
+## Feature Overview
+[Brief description of the feature and its API responsibilities]
+
+## Endpoints
+
+### [Endpoint Name]
+- **Method**: [HTTP method]
+- **Path**: [URL path with parameters]
+- **Purpose**: [What this endpoint accomplishes]
+- **Authentication**: [Required authentication level]
+
+#### Request
+**Headers:**
+```
+Authorization: Bearer [token]
+Content-Type: application/json
+```
+
+**Parameters:**
+- `param1` (string, required): [Description]
+- `param2` (number, optional): [Description]
+
+**Body:**
+```json
+{
+  "field1": "string value",
+  "field2": 123,
+  "field3": {
+    "nested": "object"
+  }
+}
+```
+
+#### Response (Success - 200)
+```json
+{
+  "data": {
+    "id": "resource_id",
+    "field1": "value",
+    "field2": 123,
+    "createdAt": "2024-01-15T10:30:00Z",
+    "updatedAt": "2024-01-15T10:30:00Z"
+  },
+  "meta": {
+    "timestamp": "2024-01-15T10:30:00Z",
+    "requestId": "req_123456789"
+  }
+}
+```
+
+#### Response (Error - 400)
+```json
+{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Invalid input data",
+    "details": [
+      {
+        "field": "field1",
+        "message": "Field is required"
+      }
+    ]
+  }
+}
+```
+
+#### Business Logic
+- **[Rule 1]**: [Description of business logic]
+- **[Rule 2]**: [Description of validation rules]
+- **[Rule 3]**: [Description of side effects]
+
+#### Integration Points
+- **[Service/Feature 1]**: [How this endpoint integrates]
+- **[Service/Feature 2]**: [Dependencies and data flow]
+        ]]>
+      </template>
+    </feature_api_contract_template>
+  </api_contract_templates>
+
+  <data_model_templates>
+    <shared_data_model_template>
+      <description>Template for shared data models and relationships</description>
+      <location>/specs/shared/data-model.md</location>
+      <template>
+        <![CDATA[
+# Data Model: Shared Models
+
+## Core Data Models
+
+### User
+```json
+{
+  "id": {
+    "type": "string",
+    "required": true,
+    "format": "UUID",
+    "description": "Unique user identifier"
+  },
+  "email": {
+    "type": "string",
+    "required": true,
+    "format": "email",
+    "unique": true,
+    "description": "User email address"
+  },
+  "createdAt": {
+    "type": "string",
+    "required": true,
+    "format": "ISO 8601",
+    "description": "Account creation timestamp"
+  },
+  "updatedAt": {
+    "type": "string",
+    "required": true,
+    "format": "ISO 8601",
+    "description": "Last update timestamp"
+  }
+}
+```
+
+#### Relationships
+- **One-to-Many**: User has many [RelatedModel]
+- **Many-to-Many**: User belongs to many [Groups/Roles]
+
+#### Business Rules
+- Email must be unique across the system
+- Soft delete: set deletedAt instead of removing record
+- Audit trail: track all changes with timestamps
+
+#### Database Indexes
+- **Primary**: id (UUID, clustered)
+- **Unique**: email
+- **Composite**: (createdAt, status) for queries
+
+## Validation Patterns
+### Common Validations
+- **Email**: RFC 5322 compliant
+- **Password**: Minimum 8 characters, mixed case, numbers, symbols
+- **Phone**: E.164 international format
+- **Date**: ISO 8601 format
+
+### Custom Validations
+- **[Field Name]**: [Validation rule and rationale]
+        ]]>
+      </template>
+    </shared_data_model_template>
+
+    <feature_data_model_template>
+      <description>Template for feature-specific data models</description>
+      <location>/specs/features/[feature-name]/data-model.md</location>
+      <template>
+        <![CDATA[
+# Data Model: [Feature Name]
+
+## Feature Data Models
+
+### [Model Name]
+```json
+{
+  "id": {
+    "type": "string",
+    "required": true,
+    "format": "UUID",
+    "description": "Unique identifier"
+  },
+  "name": {
+    "type": "string",
+    "required": true,
+    "minLength": 1,
+    "maxLength": 200,
+    "description": "Display name"
+  },
+  "status": {
+    "type": "string",
+    "required": true,
+    "enum": ["active", "inactive", "pending"],
+    "default": "pending",
+    "description": "Current status"
+  },
+  "metadata": {
+    "type": "object",
+    "required": false,
+    "properties": {
+      "key1": {"type": "string"},
+      "key2": {"type": "number"}
+    },
+    "description": "Additional metadata"
+  }
+}
+```
+
+#### Relationships
+- **Belongs To**: [Parent Model] (foreign key: [parentId])
+- **Has Many**: [Child Model] (through [childId])
+- **Many-to-Many**: [Related Model] (through [junction_table])
+
+#### Business Rules
+- **[Rule 1]**: [Data validation or business logic]
+- **[Rule 2]**: [Constraints and requirements]
+- **[Rule 3]**: [State transitions and workflows]
+
+#### Database Schema
+```sql
+CREATE TABLE [table_name] (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name VARCHAR(200) NOT NULL,
+  status VARCHAR(20) NOT NULL DEFAULT 'pending',
+  metadata JSONB,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+```
+
+#### Indexes
+- **Primary**: id (UUID)
+- **Index**: status (for filtering)
+- **Composite**: (created_at, status) for time-based queries
+- **Full-text**: name (for search functionality)
+
+## Data Migration Strategy
+### Version Control
+- All schema changes versioned with migration files
+- Rollback procedures for each migration
+- Data seeding for development and testing
+
+### Performance Considerations
+- Query optimization for common access patterns
+- Caching strategy for frequently accessed data
+- Archival strategy for historical data
+        ]]>
+      </template>
+    </feature_data_model_template>
+  </data_model_templates>
+
+  <ui_design_templates>
+    <shared_ui_design_template>
+      <description>Template for design system and shared UI components</description>
+      <location>/specs/shared/ui-design.md</location>
+      <template>
+        <![CDATA[
+# UI Design: Design System
+
+## Design System Overview
+[Description of the design system philosophy and principles]
+
+## Typography
+### Font Families
+- **Primary**: [Font name] - Used for headings and emphasis
+- **Secondary**: [Font name] - Used for body text
+- **Monospace**: [Font name] - Used for code and data
+
+### Font Scale
+- **H1**: 2.5rem (40px) - Page titles
+- **H2**: 2rem (32px) - Section headers
+- **H3**: 1.5rem (24px) - Subsection headers
+- **Body**: 1rem (16px) - Regular text
+- **Small**: 0.875rem (14px) - Secondary text
+
+## Color Palette
+### Primary Colors
+- **Primary**: #007bff - Main brand color
+- **Secondary**: #6c757d - Supporting actions
+- **Success**: #28a745 - Success states
+- **Warning**: #ffc107 - Warning states
+- **Error**: #dc3545 - Error states
+
+### Neutral Colors
+- **White**: #ffffff
+- **Light Gray**: #f8f9fa
+- **Medium Gray**: #6c757d
+- **Dark Gray**: #343a40
+- **Black**: #000000
+
+## Spacing System
+- **xs**: 4px
+- **sm**: 8px
+- **md**: 16px
+- **lg**: 24px
+- **xl**: 32px
+- **xxl**: 48px
+
+## Component Library
+### Button
+**Variants**: primary, secondary, outline, text
+**Sizes**: small, medium, large
+**States**: default, hover, active, disabled, loading
+
+### Input Field
+**Types**: text, email, password, number, textarea
+**States**: default, focus, error, disabled
+**Features**: label, help text, validation messages
+
+### Modal
+**Sizes**: small (400px), medium (600px), large (800px)
+**Components**: header, body, footer, close button
+**Behavior**: backdrop click to close, escape key handling
+
+## Responsive Breakpoints
+- **Mobile**: 0-767px
+- **Tablet**: 768-1023px
+- **Desktop**: 1024px+
+
+## Accessibility Standards
+- WCAG 2.1 AA compliance
+- Keyboard navigation support
+- Screen reader compatibility
+- Color contrast ratios: 4.5:1 for normal text, 3:1 for large text
+        ]]>
+      </template>
+    </shared_ui_design_template>
+
+    <feature_ui_design_template>
+      <description>Template for feature-specific UI components</description>
+      <location>/specs/features/[feature-name]/ui-design.md</location>
+      <template>
+        <![CDATA[
+# UI Design: [Feature Name]
+
+## Feature UI Overview
+[Brief description of the feature's user interface and user experience]
+
+## Page Layouts
+### [Page Name]
+**Purpose**: [What this page accomplishes for users]
+**URL**: [Route/URL pattern]
+**Access**: [Authentication/authorization requirements]
+
+#### Layout Structure
+```
+┌─────────────────────────────────────┐
+│ Header (Navigation)                 │
+├─────────────────────────────────────┤
+│ Main Content Area                   │
+│ ┌─────────────┐ ┌─────────────────┐ │
+│ │ Sidebar     │ │ Primary Content │ │
+│ │             │ │                 │ │
+│ └─────────────┘ └─────────────────┘ │
+├─────────────────────────────────────┤
+│ Footer                              │
+└─────────────────────────────────────┘
+```
+
+#### Responsive Behavior
+- **Mobile**: Single column, sidebar becomes drawer
+- **Tablet**: Maintain layout with adjusted spacing
+- **Desktop**: Full layout with optimal spacing
+
+## Components
+### [Component Name]
+**Purpose**: [What this component does]
+**Usage**: [When and where to use this component]
+
+#### Visual Design
+- **Dimensions**: [Width x Height specifications]
+- **Colors**: [Color usage from design system]
+- **Typography**: [Font specifications]
+- **Spacing**: [Internal and external spacing]
+
+#### Interactive Behavior
+- **Default State**: [Initial appearance and behavior]
+- **Hover State**: [Visual changes on hover]
+- **Active State**: [Appearance when activated]
+- **Loading State**: [Behavior during async operations]
+- **Error State**: [Appearance when errors occur]
+
+#### Props/Configuration
+```typescript
+interface ComponentProps {
+  title: string;
+  variant?: 'primary' | 'secondary';
+  size?: 'small' | 'medium' | 'large';
+  disabled?: boolean;
+  loading?: boolean;
+  onClick?: () => void;
+}
+```
+
+#### Accessibility
+- **Keyboard Navigation**: [Tab order and keyboard shortcuts]
+- **Screen Reader**: [ARIA labels and descriptions]
+- **Focus Management**: [Focus indicators and behavior]
+
+## User Interactions
+### [Interaction Name]
+**Trigger**: [What initiates this interaction]
+**Flow**: [Step-by-step user flow]
+**Outcome**: [Expected result]
+
+#### Success Path
+1. User [action]
+2. System [response]
+3. User sees [feedback]
+4. Process completes with [result]
+
+#### Error Handling
+- **Validation Errors**: [How validation errors are displayed]
+- **Network Errors**: [How connection issues are handled]
+- **System Errors**: [How server errors are communicated]
+
+## State Management
+### Component State
+- **Local State**: [What state is managed locally]
+- **Global State**: [What state is shared across components]
+- **Persistence**: [What state needs to be persisted]
+
+### Data Flow
+```
+User Action → Component → State Update → Re-render → UI Update
+```
+
+## Examples
+### Use Case 1: [Scenario Name]
+**Context**: [When this scenario occurs]
+**User Goal**: [What the user wants to accomplish]
+**Interface**: [How the UI supports this goal]
+**Expected Outcome**: [What should happen]
+
+### Use Case 2: [Scenario Name]
+**Context**: [When this scenario occurs]
+**User Goal**: [What the user wants to accomplish]
+**Interface**: [How the UI supports this goal]
+**Expected Outcome**: [What should happen]
+        ]]>
+      </template>
+    </feature_ui_design_template>
+  </ui_design_templates>
+
+  <business_logic_templates>
+    <shared_business_logic_template>
+      <description>Template for shared business logic and utilities</description>
+      <location>/specs/shared/business-logic.md</location>
+      <template>
+        <![CDATA[
+# Business Logic: Shared Logic
+
+## Shared Business Logic Overview
+[Description of common business logic used across features]
+
+## Core Algorithms
+### [Algorithm Name]
+**Purpose**: [What this algorithm accomplishes]
+**Input**: [Input parameters and types]
+**Output**: [Output format and type]
+**Complexity**: [Time/space complexity if relevant]
+
+#### Algorithm Steps
+1. **[Step 1]**: [Description of first step]
+2. **[Step 2]**: [Description of second step]
+3. **[Step 3]**: [Description of final step]
+
+#### Pseudocode
+```
+function algorithmName(input1, input2) {
+  // Step 1: Validate inputs
+  if (!isValid(input1)) return error
+  
+  // Step 2: Process data
+  result = processData(input1, input2)
+  
+  // Step 3: Return result
+  return result
+}
+```
+
+#### Edge Cases
+- **[Edge Case 1]**: [How to handle this scenario]
+- **[Edge Case 2]**: [How to handle this scenario]
+
+#### Performance Requirements
+- **Response Time**: [Maximum acceptable response time]
+- **Throughput**: [Required operations per second]
+- **Memory Usage**: [Memory constraints]
+
+## Validation Rules
+### [Validation Set Name]
+**Purpose**: [What these validations ensure]
+
+#### Rules
+- **[Rule 1]**: [Validation logic and error message]
+- **[Rule 2]**: [Validation logic and error message]
+- **[Rule 3]**: [Validation logic and error message]
+
+#### Implementation
+```javascript
+function validateInput(data) {
+  const errors = [];
+  
+  if (!data.field1) {
+    errors.push({ field: 'field1', message: 'Field is required' });
+  }
+  
+  if (data.field2 < 0) {
+    errors.push({ field: 'field2', message: 'Must be positive' });
+  }
+  
+  return errors.length > 0 ? { valid: false, errors } : { valid: true };
+}
+```
+
+## Error Handling Patterns
+### [Error Category]
+**Condition**: [When this error occurs]
+**Response**: [How to handle the error]
+**User Message**: [What to show the user]
+**Logging**: [What to log for debugging]
+
+#### Recovery Strategy
+- **Automatic Retry**: [When and how to retry]
+- **Fallback Behavior**: [Alternative behavior]
+- **User Action Required**: [What user needs to do]
+
+## Integration Patterns
+### [Integration Name]
+**Purpose**: [Why this integration exists]
+**Interface**: [How to interact with it]
+**Data Format**: [Expected input/output format]
+
+#### Error Handling
+- **Connection Errors**: [How to handle network issues]
+- **Timeout Errors**: [How to handle slow responses]
+- **Data Errors**: [How to handle invalid responses]
+
+#### Retry Logic
+```javascript
+async function callExternalService(data, maxRetries = 3) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await externalService.call(data);
+    } catch (error) {
+      if (attempt === maxRetries) throw error;
+      await delay(attempt * 1000); // Exponential backoff
+    }
+  }
+}
+```
+        ]]>
+      </template>
+    </shared_business_logic_template>
+
+    <feature_business_logic_template>
+      <description>Template for feature-specific business logic</description>
+      <location>/specs/features/[feature-name]/business-logic.md</location>
+      <template>
+        <![CDATA[
+# Business Logic: [Feature Name]
+
+## Feature Business Logic Overview
+[High-level description of the business logic and its purpose]
+
+## Core Business Rules
+### [Business Rule Name]
+**Description**: [What this rule enforces]
+**Scope**: [Where this rule applies]
+**Priority**: [High/Medium/Low]
+
+#### Rule Logic
+- **Condition**: [When this rule applies]
+- **Action**: [What happens when rule is triggered]
+- **Exception**: [When this rule doesn't apply]
+
+#### Implementation
+```javascript
+function enforceBusinessRule(context) {
+  if (context.meets(condition)) {
+    return executeAction(context);
+  }
+  return handleException(context);
+}
+```
+
+## Workflows
+### [Workflow Name]
+**Purpose**: [What this workflow accomplishes]
+**Trigger**: [What initiates this workflow]
+**Participants**: [Who/what is involved]
+
+#### Workflow Steps
+1. **[Step Name]**: [Description and requirements]
+   - **Input**: [Required data]
+   - **Process**: [What happens]
+   - **Output**: [Result]
+   - **Next**: [Next step or end]
+
+2. **[Step Name]**: [Description and requirements]
+   - **Input**: [Required data]
+   - **Process**: [What happens]
+   - **Output**: [Result]
+   - **Next**: [Next step or end]
+
+#### State Transitions
+```
+Initial State → Processing → Validation → Complete
+     ↓              ↓           ↓
+   Error ←────── Error ←──── Error
+```
+
+#### Error Scenarios
+- **[Error Type 1]**: [How to handle and recover]
+- **[Error Type 2]**: [How to handle and recover]
+
+## Calculations
+### [Calculation Name]
+**Purpose**: [What this calculation determines]
+**Formula**: [Mathematical formula or algorithm]
+**Precision**: [Required decimal places or accuracy]
+
+#### Input Parameters
+- **[Parameter 1]**: [Type, range, validation]
+- **[Parameter 2]**: [Type, range, validation]
+
+#### Calculation Logic
+```javascript
+function calculateValue(param1, param2) {
+  // Validate inputs
+  if (!isValidInput(param1, param2)) {
+    throw new ValidationError('Invalid parameters');
+  }
+  
+  // Perform calculation
+  const result = (param1 * param2) / 100;
+  
+  // Round to required precision
+  return Math.round(result * 100) / 100;
+}
+```
+
+#### Edge Cases
+- **Zero Values**: [How to handle zero inputs]
+- **Negative Values**: [How to handle negative inputs]
+- **Overflow**: [How to handle very large numbers]
+
+## Data Processing
+### [Process Name]
+**Purpose**: [What this process accomplishes]
+**Input**: [Data format and requirements]
+**Output**: [Result format and structure]
+
+#### Processing Steps
+1. **Data Validation**: [Validate input data]
+2. **Data Transformation**: [Convert to required format]
+3. **Business Logic Application**: [Apply rules and calculations]
+4. **Result Formatting**: [Format output]
+
+#### Performance Requirements
+- **Processing Time**: [Maximum time allowed]
+- **Memory Usage**: [Memory constraints]
+- **Batch Size**: [Optimal batch size for bulk operations]
+
+## Integration Logic
+### [Integration Name]
+**Purpose**: [Why this integration is needed]
+**External System**: [What system we're integrating with]
+**Data Synchronization**: [How data stays in sync]
+
+#### Integration Flow
+1. **Data Preparation**: [Prepare data for external system]
+2. **API Call**: [Make the external call]
+3. **Response Processing**: [Handle the response]
+4. **Local Update**: [Update local data if needed]
+
+#### Error Handling
+- **Network Errors**: [Retry logic and fallback]
+- **Data Errors**: [Validation and correction]
+- **System Errors**: [Logging and alerting]
+        ]]>
+      </template>
+    </feature_business_logic_template>
+  </business_logic_templates>
+
+  <specification_patterns>
+    <pattern name="context_inheritance">
+      <description>How specifications can inherit context from parent specifications</description>
+      <example>
+        <![CDATA[
+# Feature Specification: User Profile Management
+
+## Context Inheritance
+Inherits all context from:
+- /specs/system-overview.md (system architecture and technology stack)
+- /specs/features/user-auth/ (user authentication and authorization)
+- /specs/shared/ (global patterns and standards)
+
+## Additional Context
+This feature extends user management with:
+- Profile customization and preferences
+- Avatar upload and management
+- Privacy settings and controls
+        ]]>
+      </example>
+    </pattern>
+
+    <pattern name="cross_reference">
+      <description>How to reference related specifications</description>
+      <example>
+        <![CDATA[
+## Dependencies
+This specification depends on:
+- **User Authentication**: /specs/features/user-auth/api-contract.md
+- **File Upload**: /specs/shared/business-logic.md#file-upload
+- **Notification System**: /specs/features/notifications/
+
+## Integration Points
+- **Profile Updates**: Triggers notification per /specs/features/notifications/business-logic.md
+- **Avatar Storage**: Uses file upload patterns from /specs/shared/business-logic.md
+        ]]>
+      </example>
+    </pattern>
+
+    <pattern name="versioning">
+      <description>How to version specifications for consistency</description>
+      <example>
+        <![CDATA[
+# Specification Metadata
+- **Version**: 2.1.0
+- **Last Updated**: 2024-01-15
+- **Author**: [Team/Person]
+- **Reviewers**: [List of reviewers]
+
+## Change History
+### v2.1.0 (2024-01-15)
+- Added support for OAuth integration
+- Updated error handling patterns
+- Enhanced security requirements
+
+### v2.0.0 (2024-01-01)
+- Major restructure of API endpoints
+- Breaking changes to data models
+- New authentication flow
+        ]]>
+      </example>
+    </pattern>
+
+    <pattern name="assumption_documentation">
+      <description>How to document assumptions and decisions</description>
+      <example>
+        <![CDATA[
+## Assumptions
+- **User Base**: Assuming maximum 100,000 concurrent users
+- **Data Volume**: Expecting 1TB of data growth per month
+- **Integration**: Third-party service will maintain 99.9% uptime
+
+## Design Decisions
+### Decision: Use JWT for Authentication
+**Rationale**: Stateless authentication supports horizontal scaling
+**Alternatives Considered**: Session-based auth, OAuth only
+**Trade-offs**: Slightly larger token size vs. better scalability
+
+### Decision: PostgreSQL for Primary Database
+**Rationale**: ACID compliance required for financial data
+**Alternatives Considered**: MongoDB, MySQL
+**Trade-offs**: More complex scaling vs. data consistency guarantees
+        ]]>
+      </example>
+    </pattern>
+  </specification_patterns>
+
+  <quality_patterns>
+    <pattern name="specification_validation">
+      <description>How to validate specifications for completeness</description>
+      <checklist>
+        <category name="completeness">
+          <item>All five specification types are present</item>
+          <item>System context is clearly defined</item>
+          <item>Business context is documented</item>
+          <item>Technical context is specified</item>
+          <item>Integration points are identified</item>
+        </category>
+        <category name="consistency">
+          <item>Terminology is consistent across specifications</item>
+          <item>Data models align between API and data specifications</item>
+          <item>UI components match design system standards</item>
+          <item>Business rules are consistently applied</item>
+        </category>
+        <category name="clarity">
+          <item>Specifications can be understood without additional explanation</item>
+          <item>Examples are provided for complex concepts</item>
+          <item>Edge cases are documented</item>
+          <item>Error scenarios are specified</item>
+        </category>
+      </checklist>
+    </pattern>
+
+    <pattern name="implementation_validation">
+      <description>How to validate implementations against specifications</description>
+      <validation_process>
+        <step>Compare implementation against specification requirements</step>
+        <step>Verify all specified functionality is present</step>
+        <step>Check that no unspecified functionality was added</step>
+        <step>Validate error handling matches specifications</step>
+        <step>Confirm integration points work as specified</step>
+      </validation_process>
+    </pattern>
+  </quality_patterns>
+</specification_patterns_and_templates>

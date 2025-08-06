@@ -1,0 +1,322 @@
+<specification_first_workflow>
+  <overview>
+    This workflow guides you through systematic specification-first development,
+    where comprehensive specifications are created before any code implementation.
+    This approach ensures maintainable, scalable software with clear team collaboration.
+  </overview>
+
+  <core_principles>
+    <principle name="specifications_as_source_of_truth">
+      All development decisions and implementations must be based on written specifications.
+      Code is generated from specifications, not the other way around.
+    </principle>
+    <principle name="context_engineering">
+      Use structured specifications to provide complete context for AI collaboration,
+      minimizing the need for extensive prompting and explanation.
+    </principle>
+    <principle name="systematic_validation">
+      Every implementation must be validated against its corresponding specifications
+      using systematic quality assurance processes.
+    </principle>
+  </core_principles>
+
+  <project_structure_requirements>
+    <mandatory_structure>
+      <directory name="specs/">
+        <file name="system-overview.md">System-wide understanding and architecture</file>
+        <directory name="shared/">
+          <file name="api-contract.md">Global API standards and patterns</file>
+          <file name="data-model.md">Shared data models and relationships</file>
+          <file name="ui-design.md">Design system and shared UI components</file>
+          <file name="business-logic.md">Shared business logic and utilities</file>
+        </directory>
+        <directory name="features/">
+          <directory name="[feature-name]/">
+            <file name="api-contract.md">Feature-specific API endpoints</file>
+            <file name="data-model.md">Feature-specific data models</file>
+            <file name="ui-design.md">Feature-specific UI components</file>
+            <file name="business-logic.md">Feature-specific business logic</file>
+          </directory>
+        </directory>
+      </directory>
+      <directory name="src/">
+        <directory name="features/">
+          <directory name="[feature-name]/">
+            <directory name="components/">UI components</directory>
+            <directory name="services/">API and business logic services</directory>
+            <directory name="models/">Data models and types</directory>
+            <directory name="tests/">Feature-specific tests</directory>
+          </directory>
+        </directory>
+        <directory name="shared/">
+          <directory name="components/">Shared UI components</directory>
+          <directory name="services/">Shared services</directory>
+          <directory name="models/">Shared data models</directory>
+          <directory name="utils/">Utility functions</directory>
+          <directory name="tests/">Shared component tests</directory>
+        </directory>
+      </directory>
+    </mandatory_structure>
+  </project_structure_requirements>
+
+  <development_phases>
+    <phase number="1" name="system_planning">
+      <description>Establish system foundation and shared specifications</description>
+      <steps>
+        <step number="1">
+          <action>Create System Overview Specification</action>
+          <location>/specs/system-overview.md</location>
+          <requirements>
+            <requirement>Define system vision and value proposition</requirement>
+            <requirement>Establish core architecture and technology stack</requirement>
+            <requirement>Identify target users and business context</requirement>
+            <requirement>Set quality requirements (performance, security, scalability)</requirement>
+            <requirement>Define feature boundaries and responsibilities</requirement>
+          </requirements>
+        </step>
+        
+        <step number="2">
+          <action>Create Shared API Contract Specification</action>
+          <location>/specs/shared/api-contract.md</location>
+          <requirements>
+            <requirement>Define global API standards and conventions</requirement>
+            <requirement>Establish authentication and authorization patterns</requirement>
+            <requirement>Set standard response formats and error handling</requirement>
+            <requirement>Define rate limiting and security requirements</requirement>
+          </requirements>
+        </step>
+
+        <step number="3">
+          <action>Create Shared Data Model Specification</action>
+          <location>/specs/shared/data-model.md</location>
+          <requirements>
+            <requirement>Define common data structures and relationships</requirement>
+            <requirement>Establish validation rules and constraints</requirement>
+            <requirement>Set database design patterns and indexing strategies</requirement>
+            <requirement>Define data migration and versioning approaches</requirement>
+          </requirements>
+        </step>
+
+        <step number="4">
+          <action>Create Shared UI Design Specification</action>
+          <location>/specs/shared/ui-design.md</location>
+          <requirements>
+            <requirement>Establish design system and component library</requirement>
+            <requirement>Define typography, colors, and spacing standards</requirement>
+            <requirement>Set accessibility requirements and guidelines</requirement>
+            <requirement>Define responsive design patterns and breakpoints</requirement>
+          </requirements>
+        </step>
+
+        <step number="5">
+          <action>Create Shared Business Logic Specification</action>
+          <location>/specs/shared/business-logic.md</location>
+          <requirements>
+            <requirement>Define common algorithms and utility functions</requirement>
+            <requirement>Establish error handling and validation patterns</requirement>
+            <requirement>Set performance requirements and optimization strategies</requirement>
+            <requirement>Define integration patterns with external services</requirement>
+          </requirements>
+        </step>
+      </steps>
+    </phase>
+
+    <phase number="2" name="feature_specification">
+      <description>Create comprehensive specifications for each feature</description>
+      <steps>
+        <step number="1">
+          <action>Create Feature Directory Structure</action>
+          <location>/specs/features/[feature-name]/</location>
+          <requirements>
+            <requirement>Create feature-specific specification directory</requirement>
+            <requirement>Ensure feature name follows naming conventions</requirement>
+            <requirement>Document feature scope and boundaries</requirement>
+          </requirements>
+        </step>
+
+        <step number="2">
+          <action>Create Feature API Contract Specification</action>
+          <location>/specs/features/[feature-name]/api-contract.md</location>
+          <requirements>
+            <requirement>Define all feature-specific endpoints</requirement>
+            <requirement>Specify request/response formats for each endpoint</requirement>
+            <requirement>Document business logic for each API operation</requirement>
+            <requirement>Define error scenarios and handling</requirement>
+          </requirements>
+        </step>
+
+        <step number="3">
+          <action>Create Feature Data Model Specification</action>
+          <location>/specs/features/[feature-name]/data-model.md</location>
+          <requirements>
+            <requirement>Define feature-specific data structures</requirement>
+            <requirement>Specify relationships with shared data models</requirement>
+            <requirement>Document validation rules and business constraints</requirement>
+            <requirement>Define required database indexes and queries</requirement>
+          </requirements>
+        </step>
+
+        <step number="4">
+          <action>Create Feature UI Design Specification</action>
+          <location>/specs/features/[feature-name]/ui-design.md</location>
+          <requirements>
+            <requirement>Design all user interface components</requirement>
+            <requirement>Specify interactive behaviors and state management</requirement>
+            <requirement>Define responsive layouts and accessibility features</requirement>
+            <requirement>Document integration with shared design system</requirement>
+          </requirements>
+        </step>
+
+        <step number="5">
+          <action>Create Feature Business Logic Specification</action>
+          <location>/specs/features/[feature-name]/business-logic.md</location>
+          <requirements>
+            <requirement>Document all business rules and algorithms</requirement>
+            <requirement>Specify validation logic and error handling</requirement>
+            <requirement>Define performance requirements and constraints</requirement>
+            <requirement>Document integration points with other features</requirement>
+          </requirements>
+        </step>
+      </steps>
+    </phase>
+
+    <phase number="3" name="context_engineering_implementation">
+      <description>Use context engineering principles for AI-assisted implementation</description>
+      <steps>
+        <step number="1">
+          <action>Prepare Context References</action>
+          <requirements>
+            <requirement>Identify all relevant specification files</requirement>
+            <requirement>Create clear context reference structure</requirement>
+            <requirement>Ensure specifications provide complete context</requirement>
+            <requirement>Document any assumptions or dependencies</requirement>
+          </requirements>
+        </step>
+
+        <step number="2">
+          <action>Generate Implementation Using Specification-Driven Communication</action>
+          <communication_pattern>
+            Based on the specifications:
+            - System context: /specs/system-overview.md
+            - Shared patterns: /specs/shared/[relevant-specs]
+            - Feature specs: /specs/features/[feature-name]/
+            
+            Generate the complete [component/feature] implementation that follows
+            all requirements defined in the referenced specifications.
+          </communication_pattern>
+          <requirements>
+            <requirement>Use reference-heavy communication patterns</requirement>
+            <requirement>Minimize explanation by maximizing specification references</requirement>
+            <requirement>Request AI to document assumptions made</requirement>
+            <requirement>Ensure AI validates against specification requirements</requirement>
+          </requirements>
+        </step>
+
+        <step number="3">
+          <action>Validate Implementation Against Specifications</action>
+          <validation_checklist>
+            <category name="api_compliance">
+              <check>Follows global API standards</check>
+              <check>Implements all required endpoints</check>
+              <check>Uses correct request/response formats</check>
+              <check>Includes proper error handling</check>
+            </category>
+            <category name="data_model_compliance">
+              <check>Uses specified data structures</check>
+              <check>Implements all validation rules</check>
+              <check>Follows relationship definitions</check>
+              <check>Includes required indexes</check>
+            </category>
+            <category name="ui_compliance">
+              <check>Matches visual specifications</check>
+              <check>Implements required interactions</check>
+              <check>Follows accessibility requirements</check>
+              <check>Uses design system components</check>
+            </category>
+            <category name="logic_compliance">
+              <check>Implements all business rules</check>
+              <check>Handles specified edge cases</check>
+              <check>Meets performance requirements</check>
+              <check>Includes proper error handling</check>
+            </category>
+          </validation_checklist>
+        </step>
+      </steps>
+    </phase>
+
+    <phase number="4" name="quality_assurance">
+      <description>Systematic validation and quality assurance</description>
+      <steps>
+        <step number="1">
+          <action>Specification Compliance Review</action>
+          <requirements>
+            <requirement>Verify all specification requirements are implemented</requirement>
+            <requirement>Check for consistency across all specification types</requirement>
+            <requirement>Validate integration points work correctly</requirement>
+            <requirement>Ensure no additional features beyond specifications</requirement>
+          </requirements>
+        </step>
+
+        <step number="2">
+          <action>Integration Testing</action>
+          <requirements>
+            <requirement>Test feature interactions and system behavior</requirement>
+            <requirement>Validate API contracts between components</requirement>
+            <requirement>Verify data model relationships work correctly</requirement>
+            <requirement>Test UI component integration and workflows</requirement>
+          </requirements>
+        </step>
+
+        <step number="3">
+          <action>Performance and Security Validation</action>
+          <requirements>
+            <requirement>Verify performance requirements are met</requirement>
+            <requirement>Validate security requirements implementation</requirement>
+            <requirement>Test scalability under expected load</requirement>
+            <requirement>Ensure accessibility requirements are satisfied</requirement>
+          </requirements>
+        </step>
+
+        <step number="4">
+          <action>Documentation and Maintenance Preparation</action>
+          <requirements>
+            <requirement>Ensure specifications are up-to-date with implementation</requirement>
+            <requirement>Document any implementation decisions or assumptions</requirement>
+            <requirement>Create maintenance and evolution guidelines</requirement>
+            <requirement>Prepare team handoff documentation</requirement>
+          </requirements>
+        </step>
+      </steps>
+    </phase>
+  </development_phases>
+
+  <workflow_triggers>
+    <trigger name="new_project_initialization">
+      <condition>Starting a new software project that requires systematic development</condition>
+      <action>Begin with Phase 1: System Planning</action>
+    </trigger>
+    
+    <trigger name="new_feature_development">
+      <condition>Adding a new feature to an existing specification-first project</condition>
+      <action>Begin with Phase 2: Feature Specification for the new feature</action>
+    </trigger>
+    
+    <trigger name="specification_updates">
+      <condition>Modifying existing specifications due to requirement changes</condition>
+      <action>Update relevant specifications, then proceed to Phase 3 for affected components</action>
+    </trigger>
+    
+    <trigger name="legacy_system_migration">
+      <condition>Converting existing code to specification-first approach</condition>
+      <action>Extract specifications from existing code, then systematically refactor</action>
+    </trigger>
+  </workflow_triggers>
+
+  <success_criteria>
+    <criterion>All specifications are complete and provide sufficient context for implementation</criterion>
+    <criterion>Implementation matches specifications exactly with no deviations</criterion>
+    <criterion>Quality assurance validates all requirements are met</criterion>
+    <criterion>Team members can understand and maintain the system through specifications</criterion>
+    <criterion>Future changes can be made by updating specifications first</criterion>
+  </success_criteria>
+</specification_first_workflow>

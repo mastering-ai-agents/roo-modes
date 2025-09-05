@@ -1,0 +1,858 @@
+<project_structure_templates>
+  <overview>
+    Comprehensive project structure templates for Specification-First Development,
+    designed to support systematic development phases and optimal organization
+    of specifications, implementations, and supporting files.
+  </overview>
+
+  <structure_principles>
+    <principle name="specification_driven_organization">
+      <description>Project structure mirrors specification organization</description>
+      <rationale>
+        When project structure aligns with specification structure, developers
+        can easily navigate between specifications and implementations.
+      </rationale>
+      <implementation>
+        <practice>Mirror specs/ structure in src/ directory</practice>
+        <practice>Use consistent naming between specifications and implementations</practice>
+        <practice>Group related functionality together</practice>
+        <practice>Separate shared components from feature-specific components</practice>
+      </implementation>
+    </principle>
+
+    <principle name="progressive_development_support">
+      <description>Structure supports the four-phase development approach</description>
+      <rationale>
+        Project structure should facilitate the systematic development phases:
+        system planning, shared components, features, and infrastructure.
+      </rationale>
+      <implementation>
+        <practice>Clear separation between shared and feature-specific code</practice>
+        <practice>Infrastructure configuration separate from application code</practice>
+        <practice>Testing structure that supports integration and system testing</practice>
+        <practice>Documentation structure that supports all phases</practice>
+      </implementation>
+    </principle>
+
+    <principle name="scalability_and_maintainability">
+      <description>Structure scales with project growth and supports long-term maintenance</description>
+      <rationale>
+        Specification-first projects are designed for long-term success,
+        so structure must support growth and evolution.
+      </rationale>
+      <implementation>
+        <practice>Modular structure that supports adding new features</practice>
+        <practice>Clear boundaries between different areas of functionality</practice>
+        <practice>Consistent patterns that new team members can follow</practice>
+        <practice>Structure that supports automated tooling and processes</practice>
+      </implementation>
+    </principle>
+  </structure_principles>
+
+  <base_project_template>
+    <description>Foundation template for all specification-first projects</description>
+    <structure><![CDATA[
+project-root/
+├── project-progress.md              # Project progress tracker and todo checklist
+├── README.md                        # Project overview and getting started guide
+├── ARCHITECTURE.md                  # High-level architecture documentation
+├── CONTRIBUTING.md                  # Contribution guidelines for team members
+├── .gitignore                       # Version control ignore patterns
+├── .env.example                     # Environment variable template
+├── specs/                           # All project specifications
+│   ├── system-overview.md           # System overview and architecture
+│   ├── infrastructure.md            # Infrastructure specification
+│   ├── shared/                      # Shared specifications used across features
+│   │   ├── api-contract.md          # Global API standards and contracts
+│   │   ├── data-model.md            # Shared data models and patterns
+│   │   ├── ui-design.md             # Design system and shared UI patterns
+│   │   └── business-logic.md        # Shared business logic and rules
+│   └── features/                    # Feature-specific specifications
+│       └── [feature-name]/          # Individual feature specifications
+│           ├── api-contract.md      # Feature API contracts
+│           ├── data-model.md        # Feature data models
+│           ├── ui-design.md         # Feature UI specifications
+│           └── business-logic.md    # Feature business logic
+├── src/                             # Application source code
+│   ├── shared/                      # Shared implementation used across features
+│   │   ├── components/              # Reusable UI components
+│   │   ├── services/                # Shared business services
+│   │   ├── models/                  # Shared data models and types
+│   │   ├── utils/                   # Utility functions and helpers
+│   │   ├── constants/               # Application constants
+│   │   ├── hooks/                   # Shared React hooks (if applicable)
+│   │   └── tests/                   # Shared component tests
+│   └── features/                    # Feature-specific implementations
+│       └── [feature-name]/          # Individual feature implementation
+│           ├── components/          # Feature-specific UI components
+│           ├── services/            # Feature business logic services
+│           ├── models/              # Feature data models and types
+│           ├── hooks/               # Feature-specific hooks (if applicable)
+│           ├── utils/               # Feature-specific utilities
+│           └── tests/               # Feature-specific tests
+├── tests/                           # System-wide and integration tests
+│   ├── integration/                 # Integration tests between features
+│   ├── e2e/                         # End-to-end system tests
+│   ├── performance/                 # Performance and load tests
+│   └── fixtures/                    # Test data and fixtures
+├── infrastructure/                  # Infrastructure configuration and deployment
+│   ├── docker/                      # Docker configurations
+│   ├── kubernetes/                  # Kubernetes manifests (if applicable)
+│   ├── terraform/                   # Infrastructure as code (if applicable)
+│   ├── scripts/                     # Deployment and utility scripts
+│   └── monitoring/                  # Monitoring and alerting configurations
+├── docs/                            # Additional project documentation
+│   ├── api/                         # Generated API documentation
+│   ├── guides/                      # User and developer guides
+│   ├── decisions/                   # Architecture decision records
+│   └── runbooks/                    # Operational runbooks
+└── tools/                           # Development tools and utilities
+    ├── generators/                  # Code generators and scaffolding
+    ├── validators/                  # Specification and code validators
+    └── scripts/                     # Development automation scripts
+    ]]></structure>
+  </base_project_template>
+
+  <project_type_templates>
+    <template name="web_application">
+      <description>Template for web applications with frontend and backend</description>
+      <additional_structure><![CDATA[
+src/
+├── frontend/                        # Frontend application code
+│   ├── public/                      # Static assets
+│   ├── src/
+│   │   ├── shared/                  # Shared frontend components
+│   │   │   ├── components/          # Reusable UI components
+│   │   │   ├── hooks/               # Custom React hooks
+│   │   │   ├── services/            # API client services
+│   │   │   ├── store/               # State management (Redux/Zustand)
+│   │   │   ├── styles/              # Shared styles and themes
+│   │   │   └── utils/               # Frontend utilities
+│   │   ├── features/                # Feature-specific frontend code
+│   │   │   └── [feature-name]/
+│   │   │       ├── components/      # Feature UI components
+│   │   │       ├── hooks/           # Feature-specific hooks
+│   │   │       ├── services/        # Feature API services
+│   │   │       ├── store/           # Feature state management
+│   │   │       └── tests/           # Feature frontend tests
+│   │   ├── pages/                   # Page components (Next.js/routing)
+│   │   ├── layouts/                 # Layout components
+│   │   └── App.tsx                  # Main application component
+│   ├── package.json                 # Frontend dependencies
+│   └── vite.config.ts               # Build configuration
+├── backend/                         # Backend application code
+│   ├── src/
+│   │   ├── shared/                  # Shared backend components
+│   │   │   ├── middleware/          # Express middleware
+│   │   │   ├── services/            # Shared business services
+│   │   │   ├── models/              # Database models
+│   │   │   ├── utils/               # Backend utilities
+│   │   │   ├── validators/          # Input validation
+│   │   │   └── config/              # Configuration management
+│   │   ├── features/                # Feature-specific backend code
+│   │   │   └── [feature-name]/
+│   │   │       ├── controllers/     # HTTP request handlers
+│   │   │       ├── services/        # Business logic services
+│   │   │       ├── models/          # Feature data models
+│   │   │       ├── routes/          # API route definitions
+│   │   │       ├── validators/      # Feature input validation
+│   │   │       └── tests/           # Feature backend tests
+│   │   ├── database/                # Database configuration
+│   │   │   ├── migrations/          # Database migrations
+│   │   │   ├── seeds/               # Database seed data
+│   │   │   └── config.ts            # Database configuration
+│   │   └── server.ts                # Main server entry point
+│   ├── package.json                 # Backend dependencies
+│   └── tsconfig.json                # TypeScript configuration
+└── shared-types/                    # Shared TypeScript types
+    ├── api/                         # API request/response types
+    ├── models/                      # Shared data model types
+    └── index.ts                     # Type exports
+      ]]></additional_structure>
+      <configuration_files>
+        <file name="package.json" location="root">
+          <description>Workspace configuration for monorepo</description>
+          <template><![CDATA[
+{
+  "name": "project-name",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "src/frontend",
+    "src/backend",
+    "shared-types"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:frontend": "cd src/frontend && npm run dev",
+    "dev:backend": "cd src/backend && npm run dev",
+    "build": "npm run build:shared && npm run build:backend && npm run build:frontend",
+    "build:shared": "cd shared-types && npm run build",
+    "build:backend": "cd src/backend && npm run build",
+    "build:frontend": "cd src/frontend && npm run build",
+    "test": "npm run test:backend && npm run test:frontend",
+    "test:backend": "cd src/backend && npm run test",
+    "test:frontend": "cd src/frontend && npm run test",
+    "test:e2e": "cd tests && npm run test:e2e"
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.0",
+    "typescript": "^5.0.0"
+  }
+}
+          ]]></template>
+        </file>
+      </configuration_files>
+    </template>
+
+    <template name="microservices">
+      <description>Template for microservices architecture</description>
+      <additional_structure><![CDATA[
+src/
+├── services/                        # Individual microservices
+│   ├── [service-name]/              # Individual service
+│   │   ├── src/
+│   │   │   ├── controllers/         # HTTP request handlers
+│   │   │   ├── services/            # Business logic services
+│   │   │   ├── models/              # Service data models
+│   │   │   ├── routes/              # API route definitions
+│   │   │   ├── middleware/          # Service-specific middleware
+│   │   │   ├── config/              # Service configuration
+│   │   │   └── tests/               # Service tests
+│   │   ├── Dockerfile               # Service containerization
+│   │   ├── package.json             # Service dependencies
+│   │   └── README.md                # Service documentation
+│   └── api-gateway/                 # API Gateway service
+│       ├── src/
+│       │   ├── routes/              # Gateway routing configuration
+│       │   ├── middleware/          # Gateway middleware
+│       │   ├── auth/                # Authentication handling
+│       │   └── config/              # Gateway configuration
+│       └── package.json
+├── shared/                          # Shared libraries across services
+│   ├── auth/                        # Shared authentication library
+│   ├── database/                    # Shared database utilities
+│   ├── messaging/                   # Inter-service messaging
+│   ├── monitoring/                  # Shared monitoring utilities
+│   └── types/                       # Shared TypeScript types
+└── infrastructure/
+    ├── docker-compose.yml           # Local development environment
+    ├── kubernetes/                  # Kubernetes manifests
+    │   ├── services/                # Service deployments
+    │   ├── ingress/                 # Ingress configurations
+    │   └── monitoring/              # Monitoring stack
+    └── helm/                        # Helm charts (if applicable)
+        └── [service-name]/
+      ]]></additional_structure>
+    </template>
+
+    <template name="mobile_application">
+      <description>Template for mobile applications (React Native/Flutter)</description>
+      <additional_structure><![CDATA[
+src/
+├── mobile/                          # Mobile application code
+│   ├── src/
+│   │   ├── shared/                  # Shared mobile components
+│   │   │   ├── components/          # Reusable UI components
+│   │   │   ├── hooks/               # Custom hooks
+│   │   │   ├── services/            # API and device services
+│   │   │   ├── store/               # State management
+│   │   │   ├── styles/              # Shared styles and themes
+│   │   │   ├── utils/               # Mobile utilities
+│   │   │   └── navigation/          # Navigation configuration
+│   │   ├── features/                # Feature-specific mobile code
+│   │   │   └── [feature-name]/
+│   │   │       ├── screens/         # Feature screens/pages
+│   │   │       ├── components/      # Feature UI components
+│   │   │       ├── hooks/           # Feature-specific hooks
+│   │   │       ├── services/        # Feature services
+│   │   │       └── tests/           # Feature mobile tests
+│   │   ├── screens/                 # Main application screens
+│   │   ├── assets/                  # Images, fonts, and other assets
+│   │   └── App.tsx                  # Main application component
+│   ├── android/                     # Android-specific configuration
+│   ├── ios/                         # iOS-specific configuration
+│   ├── package.json                 # Mobile dependencies
+│   └── metro.config.js              # Metro bundler configuration
+├── backend/                         # Backend API for mobile app
+│   └── [similar to web backend structure]
+└── shared-types/                    # Shared types between mobile and backend
+      ]]></additional_structure>
+    </template>
+
+    <template name="desktop_application">
+      <description>Template for desktop applications (Electron/Tauri)</description>
+      <additional_structure><![CDATA[
+src/
+├── desktop/                         # Desktop application code
+│   ├── src/
+│   │   ├── main/                    # Main process code (Electron)
+│   │   │   ├── services/            # Main process services
+│   │   │   ├── handlers/            # IPC handlers
+│   │   │   ├── utils/               # Main process utilities
+│   │   │   └── main.ts              # Main process entry point
+│   │   ├── renderer/                # Renderer process code
+│   │   │   ├── shared/              # Shared renderer components
+│   │   │   ├── features/            # Feature-specific renderer code
+│   │   │   ├── pages/               # Application pages/windows
+│   │   │   └── App.tsx              # Renderer entry point
+│   │   └── preload/                 # Preload scripts
+│   │       └── preload.ts           # Main preload script
+│   ├── assets/                      # Application assets
+│   ├── build/                       # Build configuration
+│   ├── package.json                 # Desktop dependencies
+│   └── electron-builder.json        # Build configuration
+└── shared-types/                    # Shared types for IPC communication
+      ]]></additional_structure>
+    </template>
+  </project_type_templates>
+
+  <initialization_templates>
+    <template name="project_progress_tracker">
+      <description>Initial project progress tracker template</description>
+      <location>project-progress.md</location>
+      <template><![CDATA[
+# Project Progress Tracker: [Project Name]
+
+## Overview
+This file tracks progress for both specification development and implementation phases. 
+Tasks are organized by project phase and can be easily checked off as completed.
+
+## How to Use
+- [ ] = Not started
+- [x] = Completed  
+- [-] = In progress
+- Use this format for all tasks
+- Add new tasks as they are discovered
+- Update regularly to reflect current status
+
+## Phase 1: System Planning & Architecture
+- [ ] Create system overview specification
+- [ ] Define vision statement and system purpose
+- [ ] Document general architecture with diagrams
+- [ ] Establish business context for all features
+- [ ] Select and document technology stack
+- [ ] Define feature boundaries and system components
+- [ ] Plan development phases and priorities
+
+## Phase 2: Shared System Components
+- [ ] Create shared API contract specification
+- [ ] Define global API standards and patterns
+- [ ] Create shared data model specification
+- [ ] Define shared data patterns and relationships
+- [ ] Create shared UI design specification
+- [ ] Define design system and component library
+- [ ] Create shared business logic specification
+- [ ] Define shared business rules and patterns
+- [ ] Implement shared components and utilities
+- [ ] Set up shared testing infrastructure
+
+## Phase 3: Features
+
+### [Feature Name 1]
+- [ ] Create feature API contract specification
+- [ ] Create feature data model specification
+- [ ] Create feature UI design specification
+- [ ] Create feature business logic specification
+- [ ] Implement feature backend services
+- [ ] Implement feature frontend components
+- [ ] Implement feature data models and validation
+- [ ] Create feature tests (unit, integration)
+- [ ] Validate implementation against specifications
+- [ ] Integration testing with shared components
+
+### [Feature Name 2]
+- [ ] Create feature API contract specification
+- [ ] Create feature data model specification
+- [ ] Create feature UI design specification
+- [ ] Create feature business logic specification
+- [ ] Implement feature backend services
+- [ ] Implement feature frontend components
+- [ ] Implement feature data models and validation
+- [ ] Create feature tests (unit, integration)
+- [ ] Validate implementation against specifications
+- [ ] Integration testing with shared components
+
+## Phase 4: Infrastructure & Deployment
+- [ ] Create infrastructure specification
+- [ ] Define deployment strategy and environments
+- [ ] Document build and deployment process
+- [ ] Define monitoring and operations requirements
+- [ ] Specify security and compliance needs
+- [ ] Set up CI/CD pipeline
+- [ ] Configure deployment environments
+- [ ] Implement monitoring and logging
+- [ ] Configure security measures
+- [ ] Set up backup and disaster recovery
+- [ ] Performance testing and optimization
+- [ ] Production deployment and validation
+
+## Quality Gates
+- [ ] All specifications reviewed and approved
+- [ ] Implementation validation completed
+- [ ] Integration testing passed
+- [ ] Performance requirements met
+- [ ] Security requirements validated
+- [ ] Production readiness confirmed
+
+## Notes and Decisions
+[Add project-specific notes, decisions, and important information here]
+
+## Team Members and Responsibilities
+- **Project Lead**: [Name] - Overall project coordination
+- **System Architect**: [Name] - Architecture and technical decisions
+- **Product Owner**: [Name] - Business requirements and priorities
+- **Developers**: [Names] - Implementation and testing
+- **QA**: [Name] - Quality assurance and validation
+
+## Key Milestones
+- **System Planning Complete**: [Target Date]
+- **Shared Components Complete**: [Target Date]
+- **Feature Development Complete**: [Target Date]
+- **Infrastructure Ready**: [Target Date]
+- **Production Deployment**: [Target Date]
+      ]]></template>
+    </template>
+
+    <template name="readme_template">
+      <description>Project README template</description>
+      <location>README.md</location>
+      <template><![CDATA[
+# [Project Name]
+
+[Brief description of the project and its purpose]
+
+## Overview
+
+This project follows the Specification-First Development methodology, where comprehensive specifications drive systematic implementation using AI-assisted development techniques.
+
+## Architecture
+
+[Brief architecture overview - reference specs/system-overview.md for details]
+
+## Getting Started
+
+### Prerequisites
+
+- [List required software, versions, etc.]
+- [Development environment requirements]
+
+### Installation
+
+```bash
+# Clone the repository
+git clone [repository-url]
+cd [project-name]
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your configuration
+
+# Start development environment
+npm run dev
+```
+
+### Development Workflow
+
+1. **Specifications First**: All development starts with creating or updating specifications in the `specs/` directory
+2. **Implementation**: Use specifications to guide AI-assisted implementation
+3. **Validation**: Validate implementations against specifications
+4. **Integration**: Ensure proper integration with existing components
+
+## Project Structure
+
+```
+├── specs/                   # All project specifications
+├── src/                     # Application source code
+├── tests/                   # System-wide tests
+├── infrastructure/          # Infrastructure configuration
+├── docs/                    # Additional documentation
+└── tools/                   # Development tools
+```
+
+## Specifications
+
+All project specifications are located in the `specs/` directory:
+
+- **System Overview**: `specs/system-overview.md` - Complete system architecture and context
+- **Shared Specifications**: `specs/shared/` - Cross-cutting concerns and patterns
+- **Feature Specifications**: `specs/features/` - Individual feature requirements
+- **Infrastructure**: `specs/infrastructure.md` - Deployment and operations
+
+## Development
+
+### Adding New Features
+
+1. Create feature specifications in `specs/features/[feature-name]/`
+2. Use specifications for AI-assisted implementation
+3. Validate implementation against specifications
+4. Update project progress tracker
+
+### Code Standards
+
+- Follow established patterns from shared specifications
+- Maintain consistency with existing implementations
+- Include comprehensive error handling
+- Write tests for all new functionality
+
+## Testing
+
+```bash
+# Run all tests
+npm test
+
+# Run specific test suites
+npm run test:unit
+npm run test:integration
+npm run test:e2e
+
+# Run tests with coverage
+npm run test:coverage
+```
+
+## Deployment
+
+[Deployment instructions - reference specs/infrastructure.md for details]
+
+## Contributing
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our development process and how to submit contributions.
+
+## Documentation
+
+- **Specifications**: Complete system specifications in `specs/`
+- **API Documentation**: Generated API docs in `docs/api/`
+- **Architecture Decisions**: Decision records in `docs/decisions/`
+- **Runbooks**: Operational guides in `docs/runbooks/`
+
+## Support
+
+[Support information, contact details, issue reporting]
+
+## License
+
+[License information]
+      ]]></template>
+    </template>
+
+    <template name="contributing_guide">
+      <description>Team contribution guidelines</description>
+      <location>CONTRIBUTING.md</location>
+      <template><![CDATA[
+# Contributing to [Project Name]
+
+This project follows Specification-First Development methodology. All contributions must align with this approach.
+
+## Development Process
+
+### 1. Specification-First Approach
+
+All development starts with specifications:
+
+1. **Create/Update Specifications**: Before any code changes, create or update relevant specifications
+2. **Review Specifications**: Get specifications reviewed and approved
+3. **Implementation**: Use specifications for AI-assisted implementation
+4. **Validation**: Validate implementation against specifications
+
+### 2. Workflow Steps
+
+1. **Issue Creation**: Create issue describing the work needed
+2. **Specification Work**: Create or update specifications as needed
+3. **Specification Review**: Get specifications reviewed by team
+4. **Implementation**: Implement based on approved specifications
+5. **Validation**: Validate implementation meets all requirements
+6. **Pull Request**: Submit PR with both specifications and implementation
+7. **Code Review**: Team reviews both specifications and code
+8. **Integration**: Merge after all validations pass
+
+## Specification Guidelines
+
+### Creating Specifications
+
+- Use established templates from `.roo/rules-specification-first/3_specification_templates.xml`
+- Follow the six-type specification framework
+- Include complete context for AI consumption
+- Provide concrete examples and edge cases
+- Reference related specifications clearly
+
+### Specification Quality
+
+- [ ] Complete context provided (system, business, technical)
+- [ ] All required sections present
+- [ ] Examples provided for complex requirements
+- [ ] Edge cases and error scenarios covered
+- [ ] Integration points documented
+- [ ] Dependencies clearly identified
+
+## Implementation Guidelines
+
+### AI-Assisted Development
+
+- Use specification-driven communication patterns
+- Reference specifications rather than explaining requirements
+- Document assumptions made during implementation
+- Validate against specifications systematically
+
+### Code Standards
+
+- Follow patterns established in shared specifications
+- Maintain consistency with existing implementations
+- Include comprehensive error handling
+- Write clear, self-documenting code
+- Add appropriate tests for all functionality
+
+### Quality Requirements
+
+- [ ] Implementation matches specifications exactly
+- [ ] All tests pass (unit, integration, e2e)
+- [ ] Code follows established patterns
+- [ ] Error handling is comprehensive
+- [ ] Performance meets requirements
+- [ ] Security requirements are met
+
+## Pull Request Process
+
+### Before Submitting
+
+1. Ensure all specifications are current and approved
+2. Validate implementation against specifications
+3. Run all tests and ensure they pass
+4. Update documentation as needed
+5. Update project progress tracker
+
+### PR Description Template
+
+```markdown
+## Description
+[Brief description of changes]
+
+## Specifications
+- [ ] Specifications created/updated
+- [ ] Specifications reviewed and approved
+- [ ] Implementation follows specifications
+
+## Type of Change
+- [ ] New feature
+- [ ] Bug fix
+- [ ] Breaking change
+- [ ] Documentation update
+
+## Validation
+- [ ] Implementation validated against specifications
+- [ ] All tests pass
+- [ ] Integration testing completed
+- [ ] Performance requirements met
+
+## Checklist
+- [ ] Code follows project standards
+- [ ] Self-review completed
+- [ ] Documentation updated
+- [ ] Project progress tracker updated
+```
+
+### Review Process
+
+1. **Specification Review**: Reviewers validate specifications
+2. **Implementation Review**: Reviewers check code against specifications
+3. **Quality Review**: Validate quality standards are met
+4. **Integration Review**: Ensure proper integration with existing system
+
+## Testing Guidelines
+
+### Test Requirements
+
+- Unit tests for all business logic
+- Integration tests for component interactions
+- End-to-end tests for user workflows
+- Performance tests for critical paths
+
+### Test Organization
+
+```
+tests/
+├── unit/                    # Unit tests
+├── integration/             # Integration tests
+├── e2e/                     # End-to-end tests
+├── performance/             # Performance tests
+└── fixtures/                # Test data
+```
+
+## Documentation Standards
+
+### Required Documentation
+
+- Specifications for all features and changes
+- API documentation (auto-generated)
+- Architecture decision records
+- Runbooks for operational procedures
+
+### Documentation Updates
+
+- Update specifications before implementation
+- Generate API documentation after changes
+- Document architectural decisions
+- Update runbooks for operational changes
+
+## Communication
+
+### Specification-Driven Communication
+
+- Use specifications as primary communication medium
+- Reference specifications in discussions
+- Update specifications rather than explaining in comments
+- Keep specifications current and accurate
+
+### Team Coordination
+
+- Daily standups focus on specification and implementation progress
+- Use project progress tracker for status updates
+- Communicate specification changes to affected team members
+- Share learnings and improvements with team
+
+## Quality Assurance
+
+### Validation Process
+
+1. **Specification Validation**: Ensure specifications are complete and clear
+2. **Implementation Validation**: Validate code against specifications
+3. **Integration Validation**: Test integration with existing system
+4. **Production Readiness**: Validate deployment and operational readiness
+
+### Continuous Improvement
+
+- Collect feedback on specification and implementation quality
+- Refine processes based on team experience
+- Share successful patterns and templates
+- Update guidelines based on learnings
+
+## Getting Help
+
+- **Specifications**: Reference specification templates and examples
+- **Implementation**: Use context engineering patterns for AI assistance
+- **Process**: Ask team members for guidance on workflow
+- **Technical**: Consult system architecture and technical documentation
+
+## Recognition
+
+We recognize contributions that:
+- Improve specification quality and completeness
+- Enhance development processes and efficiency
+- Share knowledge and help team members
+- Maintain high quality standards
+- Contribute to project success
+      ]]></template>
+    </template>
+  </initialization_templates>
+
+  <structure_validation>
+    <validation_checklist>
+      <category name="specification_organization">
+        <check>specs/ directory contains all six specification types</check>
+        <check>Shared specifications are properly organized</check>
+        <check>Feature specifications follow consistent structure</check>
+        <check>Specification naming is consistent and clear</check>
+      </category>
+
+      <category name="implementation_organization">
+        <check>src/ structure mirrors specs/ organization</check>
+        <check>Shared components are properly separated</check>
+        <check>Feature implementations are well-organized</check>
+        <check>Testing structure supports all test types</check>
+      </category>
+
+      <category name="supporting_structure">
+        <check>Infrastructure configuration is properly organized</check>
+        <check>Documentation structure supports all needs</check>
+        <check>Tools and utilities are well-organized</check>
+        <check>Configuration files are properly structured</check>
+      </category>
+
+      <category name="scalability_support">
+        <check>Structure supports adding new features easily</check>
+        <check>Patterns are consistent and reusable</check>
+        <check>Dependencies are clearly managed</check>
+        <check>Structure supports team collaboration</check>
+      </category>
+    </validation_checklist>
+
+    <common_issues>
+      <issue name="specification_implementation_mismatch">
+        <description>Structure of specifications doesn't match implementation structure</description>
+        <solution>Align src/ directory structure with specs/ organization</solution>
+        <prevention>Establish clear naming conventions and structure patterns</prevention>
+      </issue>
+
+      <issue name="unclear_boundaries">
+        <description>Boundaries between shared and feature-specific code are unclear</description>
+        <solution>Clearly separate shared/ and features/ directories</solution>
+        <prevention>Define clear criteria for what belongs in shared vs feature-specific</prevention>
+      </issue>
+
+      <issue name="inconsistent_patterns">
+        <description>Different features use different organizational patterns</description>
+        <solution>Establish and enforce consistent patterns across all features</solution>
+        <prevention>Create templates and guidelines for feature organization</prevention>
+      </issue>
+
+      <issue name="poor_scalability">
+        <description>Structure becomes unwieldy as project grows</description>
+        <solution>Refactor to more modular, scalable structure</solution>
+        <prevention>Design structure with growth in mind from the beginning</prevention>
+      </issue>
+    </common_issues>
+  </structure_validation>
+
+  <customization_guidelines>
+    <guideline name="project_type_adaptation">
+      <description>Adapt base template to specific project types</description>
+      <considerations>
+        <consideration>Technology stack requirements</consideration>
+        <consideration>Deployment model (web, mobile, desktop, etc.)</consideration>
+        <consideration>Team size and structure</consideration>
+        <consideration>Integration requirements</consideration>
+      </considerations>
+      <process>
+        <step>Start with base project template</step>
+        <step>Add project-type-specific structure</step>
+        <step>Customize configuration files</step>
+        <step>Adapt documentation templates</step>
+        <step>Validate structure meets project needs</step>
+      </process>
+    </guideline>
+
+    <guideline name="team_customization">
+      <description>Customize structure for team preferences and constraints</description>
+      <considerations>
+        <consideration>Team size and experience level</consideration>
+        <consideration>Development tools and preferences</consideration>
+        <consideration>Existing organizational standards</consideration>
+        <consideration>Integration with existing systems</consideration>
+      </considerations>
+      <customization_areas>
+        <area>Directory naming conventions</area>
+        <area>File organization patterns</area>
+        <area>Documentation structure</area>
+        <area>Tool integration points</area>
+      </customization_areas>
+    </guideline>
+
+    <guideline name="evolution_support">
+      <description>Design structure to evolve with project needs</description>
+      <principles>
+        <principle>Start simple, add complexity as needed</principle>
+        <principle>Maintain consistency during evolution</principle>
+        <principle>Plan for refactoring and restructuring</principle>
+        <principle>Document structural decisions and rationale</principle>
+      </principles>
+      <evolution_strategies>
+        <strategy>Modular structure that supports reorganization</strategy>
+        <strategy>Clear boundaries that can be adjusted</strategy>
+        <strategy>Consistent patterns that can be extended</strategy>
+        <strategy>Documentation that supports understanding changes</strategy>
+      </evolution_strategies>
+    </guideline>
+  </customization_guidelines>
+</project_structure_templates>

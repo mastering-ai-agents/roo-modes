@@ -1,0 +1,270 @@
+<specification_first_workflow>
+  <overview>
+    This workflow guides you through the Specification-First Development methodology,
+    a systematic approach for building serious, production-ready software through
+    comprehensive upfront planning and context engineering for AI collaboration.
+  </overview>
+
+  <core_philosophy>
+    Specifications are the source of truth, and code is generated from these specifications
+    to ensure consistency, quality, and maintainability. Context Engineering enables
+    minimal human-AI interaction while maintaining professional standards.
+  </core_philosophy>
+
+  <initialization_workflow>
+    <step number="1">
+      <title>Assess Project Requirements</title>
+      <description>Determine if specification-first approach is appropriate</description>
+      <actions>
+        <action>Evaluate project complexity and longevity requirements</action>
+        <action>Assess team collaboration needs</action>
+        <action>Determine if systematic architecture is needed</action>
+        <action>Confirm production-ready quality requirements</action>
+      </actions>
+      <decision_criteria>
+        <criterion>Project will be maintained long-term</criterion>
+        <criterion>Multiple developers will work on the codebase</criterion>
+        <criterion>System needs to scale and evolve</criterion>
+        <criterion>Quality and reliability are critical</criterion>
+      </decision_criteria>
+    </step>
+
+    <step number="2">
+      <title>Initialize Project Structure</title>
+      <description>Create the foundational project structure for specification-first development</description>
+      <actions>
+        <action>Create project-progress.md in project root for tracking</action>
+        <action>Create specs/ directory with proper organization</action>
+        <action>Set up shared specifications directory (specs/shared/)</action>
+        <action>Prepare features directory structure (specs/features/)</action>
+        <action>Create infrastructure specification placeholder</action>
+      </actions>
+      <validation>
+        <check>Project structure follows specification-first conventions</check>
+        <check>Progress tracking file is properly initialized</check>
+        <check>All required directories are created</check>
+      </validation>
+    </step>
+  </initialization_workflow>
+
+  <main_development_phases>
+    <phase name="system_planning" order="1">
+      <title>Phase 1: System Planning & Architecture</title>
+      <description>Establish complete system context and architectural foundation</description>
+      
+      <steps>
+        <step number="1">
+          <title>Create System Overview Specification</title>
+          <actions>
+            <action>Define vision statement and system purpose</action>
+            <action>Document general architecture with diagrams</action>
+            <action>Establish business context for all features</action>
+            <action>Select and document technology stack</action>
+            <action>Define feature boundaries and system components</action>
+          </actions>
+          <deliverable>specs/system-overview.md</deliverable>
+        </step>
+
+        <step number="2">
+          <title>Plan Development Phases</title>
+          <actions>
+            <action>Identify shared system components</action>
+            <action>Define feature development order</action>
+            <action>Plan infrastructure requirements</action>
+            <action>Update project-progress.md with detailed tasks</action>
+          </actions>
+          <deliverable>Updated project-progress.md with phase breakdown</deliverable>
+        </step>
+      </steps>
+
+      <completion_criteria>
+        <criterion>System architecture is clearly defined</criterion>
+        <criterion>Technology stack is documented and justified</criterion>
+        <criterion>Feature boundaries are established</criterion>
+        <criterion>Development phases are planned</criterion>
+      </completion_criteria>
+    </phase>
+
+    <phase name="shared_components" order="2">
+      <title>Phase 2: Shared System Components</title>
+      <description>Specify and implement cross-cutting concerns and shared functionality</description>
+      
+      <steps>
+        <step number="1">
+          <title>Create Shared Specifications</title>
+          <actions>
+            <action>Define global API contract standards</action>
+            <action>Specify shared data models and relationships</action>
+            <action>Document UI design system and patterns</action>
+            <action>Define shared business logic and rules</action>
+          </actions>
+          <deliverables>
+            <deliverable>specs/shared/api-contract.md</deliverable>
+            <deliverable>specs/shared/data-model.md</deliverable>
+            <deliverable>specs/shared/ui-design.md</deliverable>
+            <deliverable>specs/shared/business-logic.md</deliverable>
+          </deliverables>
+        </step>
+
+        <step number="2">
+          <title>Implement Shared Components</title>
+          <actions>
+            <action>Generate shared utilities and services</action>
+            <action>Create reusable UI components</action>
+            <action>Implement shared data models</action>
+            <action>Set up shared testing infrastructure</action>
+          </actions>
+          <context_engineering>
+            Use specification references to minimize AI interaction:
+            "Based on specifications in /specs/shared/, generate the complete
+            shared component implementation in /src/shared/"
+          </context_engineering>
+        </step>
+      </steps>
+
+      <completion_criteria>
+        <criterion>All shared specifications are complete</criterion>
+        <criterion>Shared components are implemented and tested</criterion>
+        <criterion>Patterns are established for feature development</criterion>
+      </completion_criteria>
+    </phase>
+
+    <phase name="feature_development" order="3">
+      <title>Phase 3: Feature Development</title>
+      <description>Systematic development of individual features using established patterns</description>
+      
+      <feature_workflow>
+        <step number="1">
+          <title>Feature Specification</title>
+          <actions>
+            <action>Create feature-specific specification directory</action>
+            <action>Define feature API contract</action>
+            <action>Specify feature data models</action>
+            <action>Document feature UI requirements</action>
+            <action>Define feature business logic</action>
+          </actions>
+          <deliverables>
+            <deliverable>specs/features/[feature-name]/api-contract.md</deliverable>
+            <deliverable>specs/features/[feature-name]/data-model.md</deliverable>
+            <deliverable>specs/features/[feature-name]/ui-design.md</deliverable>
+            <deliverable>specs/features/[feature-name]/business-logic.md</deliverable>
+          </deliverables>
+        </step>
+
+        <step number="2">
+          <title>Context-Engineered Implementation</title>
+          <actions>
+            <action>Prepare comprehensive context references</action>
+            <action>Generate feature implementation using specification-driven communication</action>
+            <action>Validate implementation against specifications</action>
+            <action>Integrate with existing shared components</action>
+          </actions>
+          <context_pattern>
+            "Based on system context (/specs/system-overview.md), shared patterns
+            (/specs/shared/), and feature specifications (/specs/features/[feature-name]/),
+            generate the complete feature implementation in /src/features/[feature-name]/"
+          </context_pattern>
+        </step>
+
+        <step number="3">
+          <title>Quality Assurance</title>
+          <actions>
+            <action>Validate specification compliance</action>
+            <action>Test integration with shared components</action>
+            <action>Verify business logic implementation</action>
+            <action>Confirm UI/UX requirements are met</action>
+          </actions>
+        </step>
+      </feature_workflow>
+
+      <completion_criteria>
+        <criterion>Feature specifications are complete and consistent</criterion>
+        <criterion>Implementation follows established patterns</criterion>
+        <criterion>All business requirements are satisfied</criterion>
+        <criterion>Integration with shared components works correctly</criterion>
+      </completion_criteria>
+    </phase>
+
+    <phase name="infrastructure" order="4">
+      <title>Phase 4: Infrastructure & Deployment</title>
+      <description>Specify and implement deployment, operations, and infrastructure</description>
+      
+      <steps>
+        <step number="1">
+          <title>Infrastructure Specification</title>
+          <actions>
+            <action>Define deployment strategy</action>
+            <action>Specify environment requirements</action>
+            <action>Document build and deployment process</action>
+            <action>Define monitoring and operations requirements</action>
+            <action>Specify security and compliance needs</action>
+          </actions>
+          <deliverable>specs/infrastructure.md</deliverable>
+        </step>
+
+        <step number="2">
+          <title>Infrastructure Implementation</title>
+          <actions>
+            <action>Create deployment configurations</action>
+            <action>Set up CI/CD pipelines</action>
+            <action>Implement monitoring and logging</action>
+            <action>Configure security measures</action>
+          </actions>
+        </step>
+      </steps>
+
+      <completion_criteria>
+        <criterion>Infrastructure is fully specified</criterion>
+        <criterion>Deployment process is automated</criterion>
+        <criterion>Monitoring and operations are functional</criterion>
+        <criterion>Security requirements are met</criterion>
+      </completion_criteria>
+    </phase>
+  </main_development_phases>
+
+  <context_engineering_integration>
+    <principle>Every AI interaction should reference relevant specifications</principle>
+    <principle>Specifications provide complete context without additional explanation</principle>
+    <principle>Use systematic validation to ensure production quality</principle>
+    <principle>Maintain specification-code consistency throughout development</principle>
+  </context_engineering_integration>
+
+  <quality_gates>
+    <gate name="specification_completeness">
+      <description>All required specifications are complete before implementation</description>
+      <checks>
+        <check>System overview provides complete context</check>
+        <check>Shared specifications define all patterns</check>
+        <check>Feature specifications are comprehensive</check>
+        <check>Infrastructure requirements are documented</check>
+      </checks>
+    </gate>
+
+    <gate name="implementation_compliance">
+      <description>Generated code follows all specification requirements</description>
+      <checks>
+        <check>API implementations match contract specifications</check>
+        <check>Data models follow specified structures</check>
+        <check>UI components meet design requirements</check>
+        <check>Business logic implements all rules</check>
+      </checks>
+    </gate>
+
+    <gate name="integration_validation">
+      <description>All components integrate correctly</description>
+      <checks>
+        <check>Features integrate with shared components</check>
+        <check>API contracts are consistent across features</check>
+        <check>Data relationships work correctly</check>
+        <check>UI patterns are consistent</check>
+      </checks>
+    </gate>
+  </quality_gates>
+
+  <continuous_improvement>
+    <practice>Update specifications when requirements change</practice>
+    <practice>Refine context engineering patterns based on results</practice>
+    <practice>Optimize specification templates for better AI consumption</practice>
+    <practice>Document successful patterns for reuse</practice>
+  </continuous_improvement>
+</specification_first_workflow>
